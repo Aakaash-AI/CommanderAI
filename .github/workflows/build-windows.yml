@@ -1,44 +1,29 @@
-name: Build CommanderAI Windows EXE
+name: Build Windows
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
 
 jobs:
-  build-windows:
+  build:
     runs-on: windows-latest
+
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: "18"
 
       - name: Install dependencies
-        run: |
-          npm ci
-          cd server && npm ci
-          cd ../client && npm ci
-          cd ..
+        run: npm install
 
-      - name: Build client
-        run: npm run build-client
-
-      - name: Build Electron App (Windows)
+      - name: Build Electron App (Windows EXE)
         run: npm run build:win
-        env:
-          CSC_LINK: ${{ secrets.CSC_LINK }} # Optional: code signing cert URL
-          CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }} # Optional: cert password
 
-      - name: Upload installer artifact
-        uses: actions/upload-artifact@v4
+      - name: Upload EXE Artifact
+        uses: actions/upload-artifact@v3
         with:
-          name: commanderai-windows
-          path: |
-            dist/*.exe
-            dist/*.zip
-            dist/*.nsis
+          name: CommanderAI-Windows-EXE
+          path: dist/*.exe
