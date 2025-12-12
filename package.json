@@ -9,9 +9,7 @@
     "build:win": "npm run build-client && electron-builder --win",
     "start": "electron electron/main.js"
   },
-  "dependencies": {
-    // no runtime dependencies required by Electron app itself
-  },
+  "dependencies": 
   "devDependencies": {
     "electron": "^24.8.8",
     "electron-builder": "^24.13.3"
