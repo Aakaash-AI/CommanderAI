@@ -16,8 +16,24 @@ jobs:
         with:
           node-version: "18"
 
-      - name: Install dependencies
+      - name: Fix invalid node-fetch version
+        shell: bash
+        run: |
+          # Replace any invalid node-fetch versions (3.4.x) with 3.3.2
+          find . -name package.json -print0 | while IFS= read -r -d '' file; do
+            sed -i 's/"node-fetch": "\^3.4.2"/"node-fetch": "3.3.2"/g' "$file"
+            sed -i 's/"node-fetch": "\^3.4.1"/"node-fetch": "3.3.2"/g' "$file"
+            sed -i 's/"node-fetch": "\^3.4.0"/"node-fetch": "3.3.2"/g' "$file"
+          done
+
+      - name: Install root dependencies
         run: npm install
+
+      - name: Install server dependencies
+        run: cd server && npm install
+
+      - name: Install client dependencies
+        run: cd client && npm install
 
       - name: Build Electron App (Windows EXE)
         run: npm run build:win
