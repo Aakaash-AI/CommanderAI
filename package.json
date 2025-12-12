@@ -4,16 +4,20 @@
   "description": "Commander AI Desktop Application",
   "author": "Aakaash",
   "main": "electron/main.js",
+
   "scripts": {
     "build-client": "cd client && npm run build",
     "build:win": "npm run build-client && electron-builder --win",
-    "start": "ELECTRON_DEV=true electron electron/main.js"
+    "start": "electron electron/main.js"
   },
+
   "dependencies": {},
+
   "devDependencies": {
     "electron": "24.8.8",
     "electron-builder": "24.13.3"
   },
+
   "build": {
     "appId": "com.commander.ai",
     "productName": "Commander AI",
@@ -22,7 +26,7 @@
     },
     "files": [
       "electron/**/*",
-      "dist/**/*",
+      "client/dist/**/*",
       "server/**/*",
       "package.json"
     ],
@@ -35,6 +39,7 @@
     "win": {
       "target": "nsis",
       "icon": "build/icon.png"
-    }
+    },
+    "publish": null
   }
 }
