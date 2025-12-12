@@ -1,4 +1,3 @@
-
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
 
@@ -11,15 +10,19 @@ function createWindow () {
       contextIsolation: true,
     },
     autoHideMenuBar: true,
-    backgroundColor: '#0b0f1a'
+    backgroundColor: '#0b0f1a',
   });
 
   if (process.env.ELECTRON_DEV === 'true') {
     win.loadURL('http://localhost:5173');
   } else {
-    win.loadFile(path.join(__dirname, '..', 'client', 'dist', 'index.html'));
+    // Load the built client correctly
+    win.loadFile(path.join(process.resourcesPath, 'app', 'dist', 'index.html'));
   }
 }
 
 app.whenReady().then(createWindow);
-app.on('window-all-closed', () => { if (process.platform !== 'darwin') app.quit(); });
+
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') app.quit();
+});
