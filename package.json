@@ -10,9 +10,10 @@
     "start": "electron electron/main.js"
   },
   "dependencies": {
-    "electron": "^24.8.8"
+    // no runtime dependencies required by Electron app itself
   },
   "devDependencies": {
+    "electron": "^24.8.8",
     "electron-builder": "^24.13.3"
   },
   "build": {
